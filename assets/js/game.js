@@ -418,7 +418,8 @@ class SecurityGame {
             result: resultText,
             questions: this.userAnswers.map(ans => ({
                 id: ans.qId,
-                correct: ans.isCorrect
+                correct: ans.isCorrect,
+                choice: ans.userChoice
             }))
         };
 

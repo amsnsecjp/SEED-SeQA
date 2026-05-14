@@ -20,6 +20,7 @@ var TOP_LEVEL_ALLOWED_KEYS = {
   score: true,
   result: true,
   token: true,
+  timestamp: true,
   questions: true
 };
 
@@ -60,6 +61,35 @@ var ALLOWED_QUESTION_IDS = {
   X52: true, X53: true, X54: true, X55: true, X56: true, X57: true, X58: true, X59: true
 };
 
+function getLogHeaders() {
+  return [
+    "タイムスタンプ", "名前", "難易度", "スコア",
+    "Q1_ID", "Q1_Category", "Q1_正誤", "Q1_選択",
+    "Q2_ID", "Q2_Category", "Q2_正誤", "Q2_選択",
+    "Q3_ID", "Q3_Category", "Q3_正誤", "Q3_選択",
+    "Q4_ID", "Q4_Category", "Q4_正誤", "Q4_選択",
+    "Q5_ID", "Q5_Category", "Q5_正誤", "Q5_選択",
+    "Q6_ID", "Q6_Category", "Q6_正誤", "Q6_選択",
+    "Q7_ID", "Q7_Category", "Q7_正誤", "Q7_選択",
+    "Q8_ID", "Q8_Category", "Q8_正誤", "Q8_選択",
+    "Q9_ID", "Q9_Category", "Q9_正誤", "Q9_選択",
+    "Q10_ID", "Q10_Category", "Q10_正誤", "Q10_選択"
+  ];
+}
+
+function ensureLogHeaders(sheet) {
+  var headers = getLogHeaders();
+  var width = headers.length;
+  if (sheet.getLastRow() === 0) {
+    sheet.getRange(1, 1, 1, width).setValues([headers]);
+    return;
+  }
+  var firstCell = String(sheet.getRange(1, 1).getValue() || "");
+  if (firstCell !== "タイムスタンプ") {
+    sheet.getRange(1, 1, 1, width).setValues([headers]);
+  }
+}
+
 function getLogSheet() {
   var ss = SpreadsheetApp.getActiveSpreadsheet();
   var sheet = ss.getSheetByName(LOG_SHEET_NAME);
@@ -79,27 +109,10 @@ function doPost(e) {
     var data = JSON.parse(e.postData.contents);
     validatePayload(data);
 
-    // ヘッダーが無ければ作成
-    if (sheet.getLastRow() === 0) {
-      var headers = [
-        "タイムスタンプ", "名前", "難易度", "スコア",
-        "Q1_ID", "Q1_Category", "Q1_正誤", "Q1_選択",
-        "Q2_ID", "Q2_Category", "Q2_正誤", "Q2_選択",
-        "Q3_ID", "Q3_Category", "Q3_正誤", "Q3_選択",
-        "Q4_ID", "Q4_Category", "Q4_正誤", "Q4_選択",
-        "Q5_ID", "Q5_Category", "Q5_正誤", "Q5_選択",
-        "Q6_ID", "Q6_Category", "Q6_正誤", "Q6_選択",
-        "Q7_ID", "Q7_Category", "Q7_正誤", "Q7_選択",
-        "Q8_ID", "Q8_Category", "Q8_正誤", "Q8_選択",
-        "Q9_ID", "Q9_Category", "Q9_正誤", "Q9_選択",
-        "Q10_ID", "Q10_Category", "Q10_正誤", "Q10_選択"
-      ];
-      sheet.appendRow(headers);
-    }
+    ensureLogHeaders(sheet);
 
-    // 行データを構築（タイムスタンプ > 名前 > 難易度 > スコア > Q1...）
     var row = [
-      sanitizeCell(getServerTimestamp()),
+      sanitizeCell(resolveTimestamp(data)),
       sanitizeCell(data.agent),
       sanitizeCell(data.difficulty),
       sanitizeCell(data.score)
@@ -150,7 +163,25 @@ function sanitizeCell(value) {
 }
 
 function getServerTimestamp() {
-  return Utilities.formatDate(new Date(), Session.getScriptTimeZone(), "yyyy/MM/dd HH:mm:ss");
+  var tz = Session.getScriptTimeZone();
+  if (!tz) {
+    tz = "Asia/Tokyo";
+  }
+  return Utilities.formatDate(new Date(), tz, "yyyy/MM/dd HH:mm:ss");
+}
+
+function resolveTimestamp(data) {
+  if (data && typeof data.timestamp === "string" && data.timestamp.length > 0) {
+    var parsed = new Date(data.timestamp);
+    if (!isNaN(parsed.getTime())) {
+      var tz = Session.getScriptTimeZone();
+      if (!tz) {
+        tz = "Asia/Tokyo";
+      }
+      return Utilities.formatDate(parsed, tz, "yyyy/MM/dd HH:mm:ss");
+    }
+  }
+  return getServerTimestamp();
 }
 
 function toHalfWidthAscii(value) {
@@ -210,6 +241,12 @@ function validatePayload(data) {
     throw new Error("Invalid token");
   }
 
+  if (data.timestamp != null) {
+    if (typeof data.timestamp !== "string" || data.timestamp.length > 40) {
+      throw new Error("Invalid timestamp");
+    }
+  }
+
   if (!Array.isArray(data.questions) || data.questions.length > 10) {
     throw new Error("Invalid questions");
   }
@@ -232,8 +269,14 @@ function validatePayload(data) {
     if (typeof q.correct !== "boolean") {
       throw new Error("Invalid question correctness");
     }
+    if (q.category == null) {
+      q.category = "";
+    }
     if (typeof q.category !== "string" || q.category.length > 80) {
       throw new Error("Invalid question category");
+    }
+    if (q.choice == null) {
+      q.choice = "";
     }
     if (typeof q.choice !== "string" || q.choice.length > 200) {
       throw new Error("Invalid question choice");

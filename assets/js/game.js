@@ -863,9 +863,10 @@ class SecurityGame {
             score: this.score,
             result: resultText,
             token: GAS_TOKEN,
+            timestamp: new Date().toISOString(),
             questions: this.userAnswers.map((ans) => ({
                 id: ans.qId,
-                category: ans.category || "",
+                category: ans.category || "未分類",
                 correct: ans.isCorrect,
                 choice: ans.userChoice || ""
             }))

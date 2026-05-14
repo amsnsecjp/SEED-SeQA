@@ -77,17 +77,40 @@ function getLogHeaders() {
   ];
 }
 
+function headersNeedUpdate(sheet) {
+  var expected = getLogHeaders();
+  var width = expected.length;
+  if (sheet.getLastRow() === 0) {
+    return true;
+  }
+  var existing = sheet.getRange(1, 1, 1, width).getValues()[0];
+  for (var i = 0; i < width; i++) {
+    if (String(existing[i] || "") !== expected[i]) {
+      return true;
+    }
+  }
+  return false;
+}
+
 function ensureLogHeaders(sheet) {
   var headers = getLogHeaders();
   var width = headers.length;
-  if (sheet.getLastRow() === 0) {
-    sheet.getRange(1, 1, 1, width).setValues([headers]);
-    return;
-  }
-  var firstCell = String(sheet.getRange(1, 1).getValue() || "");
-  if (firstCell !== "タイムスタンプ") {
+  if (headersNeedUpdate(sheet)) {
     sheet.getRange(1, 1, 1, width).setValues([headers]);
   }
+}
+
+function appendLogRow(sheet, row) {
+  var width = getLogHeaders().length;
+  var values = row.slice(0);
+  while (values.length < width) {
+    values.push("");
+  }
+  if (values.length > width) {
+    values = values.slice(0, width);
+  }
+  var nextRow = sheet.getLastRow() + 1;
+  sheet.getRange(nextRow, 1, nextRow, width).setValues([values]);
 }
 
 function getLogSheet() {
@@ -97,6 +120,31 @@ function getLogSheet() {
     sheet = ss.insertSheet(LOG_SHEET_NAME);
   }
   return sheet;
+}
+
+function buildLogRow(data) {
+  var row = [
+    sanitizeCell(resolveTimestamp(data)),
+    sanitizeCell(data.agent),
+    sanitizeCell(data.difficulty),
+    sanitizeCell(data.score)
+  ];
+
+  var questions = data.questions || [];
+  for (var i = 0; i < 10; i++) {
+    if (i < questions.length) {
+      row.push(sanitizeCell(questions[i].id));
+      row.push(sanitizeCell(questions[i].category));
+      row.push(sanitizeCell(questions[i].correct ? "O" : "X"));
+      row.push(sanitizeCell(questions[i].choice));
+    } else {
+      row.push("");
+      row.push("");
+      row.push("");
+      row.push("");
+    }
+  }
+  return row;
 }
 
 function doPost(e) {
@@ -111,29 +159,8 @@ function doPost(e) {
 
     ensureLogHeaders(sheet);
 
-    var row = [
-      sanitizeCell(resolveTimestamp(data)),
-      sanitizeCell(data.agent),
-      sanitizeCell(data.difficulty),
-      sanitizeCell(data.score)
-    ];
-
-    var questions = data.questions || [];
-    for (var i = 0; i < 10; i++) {
-      if (i < questions.length) {
-        row.push(sanitizeCell(questions[i].id));
-        row.push(sanitizeCell(questions[i].category));
-        row.push(sanitizeCell(questions[i].correct ? "O" : "X"));
-        row.push(sanitizeCell(questions[i].choice));
-      } else {
-        row.push("");
-        row.push("");
-        row.push("");
-        row.push("");
-      }
-    }
-
-    sheet.appendRow(row);
+    var row = buildLogRow(data);
+    appendLogRow(sheet, row);
 
     return ContentService
       .createTextOutput(JSON.stringify({ status: "ok" }))
@@ -172,13 +199,12 @@ function getServerTimestamp() {
 
 function resolveTimestamp(data) {
   if (data && typeof data.timestamp === "string" && data.timestamp.length > 0) {
+    if (/^\d{4}\/\d{2}\/\d{2} \d{2}:\d{2}:\d{2}$/.test(data.timestamp)) {
+      return data.timestamp;
+    }
     var parsed = new Date(data.timestamp);
     if (!isNaN(parsed.getTime())) {
-      var tz = Session.getScriptTimeZone();
-      if (!tz) {
-        tz = "Asia/Tokyo";
-      }
-      return Utilities.formatDate(parsed, tz, "yyyy/MM/dd HH:mm:ss");
+      return Utilities.formatDate(parsed, "Asia/Tokyo", "yyyy/MM/dd HH:mm:ss");
     }
   }
   return getServerTimestamp();

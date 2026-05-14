@@ -20,6 +20,21 @@ function resolveAgentName(value) {
     return sanitizeAgentInputValue(value) || "GUEST";
 }
 
+function formatJstTimestamp(date = new Date()) {
+    const parts = new Intl.DateTimeFormat("en-CA", {
+        timeZone: "Asia/Tokyo",
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit",
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit",
+        hour12: false
+    }).formatToParts(date);
+    const get = (type) => parts.find((part) => part.type === type)?.value || "";
+    return `${get("year")}/${get("month")}/${get("day")} ${get("hour")}:${get("minute")}:${get("second")}`;
+}
+
 function shuffleArray(arr) {
     const a = arr.slice();
     for (let i = a.length - 1; i > 0; i--) {
@@ -706,7 +721,7 @@ class SecurityGame {
             correctAnswer: q.answer,
             isCorrect: isCorrect,
             explanation: q.explanation,
-            timestamp: new Date().toISOString()
+            timestamp: formatJstTimestamp()
         });
 
         this.showFeedback(isCorrect, q, choice);
@@ -863,7 +878,7 @@ class SecurityGame {
             score: this.score,
             result: resultText,
             token: GAS_TOKEN,
-            timestamp: new Date().toISOString(),
+            timestamp: formatJstTimestamp(),
             questions: this.userAnswers.map((ans) => ({
                 id: ans.qId,
                 category: ans.category || "未分類",

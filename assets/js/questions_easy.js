@@ -1,7 +1,7 @@
 const QUESTIONS_EASY = [
   {
     id: "E01",
-    category: "アカウント管理",
+    category: "アカウント・認証",
     text: "卒業した学生のアカウントがシステムに残っていることに気付きました。適切な対応はどれですか。",
     answer: "管理者に連絡する",
     choices: ["放置する", "管理者に連絡する", "自分で削除する"],
@@ -9,7 +9,7 @@ const QUESTIONS_EASY = [
   },
   {
     id: "E02",
-    category: "アカウント管理",
+    category: "アカウント・認証",
     text: "オンラインゲームのアカウント情報（IDやパスワード）を友達に教える行為は安全ですか。",
     answer: "危険",
     choices: ["安全", "危険"],
@@ -17,7 +17,7 @@ const QUESTIONS_EASY = [
   },
   {
     id: "E03",
-    category: "情報管理",
+    category: "情報管理・個人情報",
     text: "バックアップを取る主な目的はどれですか。",
     answer: "データ復旧",
     choices: ["容量削減", "データ復旧", "データ整理"],
@@ -25,7 +25,7 @@ const QUESTIONS_EASY = [
   },
   {
     id: "E04",
-    category: "情報管理",
+    category: "情報管理・個人情報",
     text: "重要な情報を共有する場合の原則として正しいのはどれですか。",
     answer: "必要な人のみで共有",
     choices: ["制限なしで共有", "必要な人のみで共有"],
@@ -33,7 +33,7 @@ const QUESTIONS_EASY = [
   },
   {
     id: "E05",
-    category: "情報管理",
+    category: "情報管理・個人情報",
     text: "個人情報や重要な情報が印刷された紙を廃棄する場合の適切な方法はどれですか。",
     answer: "シュレッダーにかける",
     choices: ["そのままゴミ箱に捨てる", "シュレッダーにかける"],
@@ -41,7 +41,7 @@ const QUESTIONS_EASY = [
   },
   {
     id: "E06",
-    category: "情報管理",
+    category: "情報管理・個人情報",
     text: "学校の内部資料や授業資料をSNSに投稿する行為は安全ですか。",
     answer: "危険",
     choices: ["安全", "危険"],
@@ -49,7 +49,7 @@ const QUESTIONS_EASY = [
   },
   {
     id: "E07",
-    category: "情報管理",
+    category: "情報管理・個人情報",
     text: "授業や話し合いの後、ホワイトボードに重要な情報が残っています。適切な対応はどれですか。",
     answer: "消去する",
     choices: ["そのままにする", "消去する"],
@@ -57,7 +57,7 @@ const QUESTIONS_EASY = [
   },
   {
     id: "E08",
-    category: "情報管理",
+    category: "情報管理・個人情報",
     text: "学校の重要なデータを学校の外に持ち出す場合の正しい手順はどれですか。",
     answer: "学校の許可を得て持ち出す",
     choices: ["無断で持ち出す", "学校の許可を得て持ち出す"],
@@ -65,7 +65,7 @@ const QUESTIONS_EASY = [
   },
   {
     id: "E09",
-    category: "インシデント",
+    category: "インシデント対応・運用",
     text: "誤って怪しいメールの添付ファイルを開いてしまいました。最も適切な行動はどれですか。",
     answer: "速やかに報告",
     choices: ["隠す", "速やかに報告", "SNS投稿で拡散"],
@@ -73,7 +73,7 @@ const QUESTIONS_EASY = [
   },
   {
     id: "E11",
-    category: "インターネット",
+    category: "ネットワーク・Web・クラウド",
     text: "突然『ウイルス感染』という警告画面が表示されました。正しい対応はどれですか。",
     answer: "何も入力せず閉じる",
     choices: ["何も入力せず閉じる", "指示に従って操作する"],
@@ -81,7 +81,7 @@ const QUESTIONS_EASY = [
   },
   {
     id: "E12",
-    category: "インターネット",
+    category: "ネットワーク・Web・クラウド",
     text: "学校のPCでインターネットを閲覧する場合、適切なのはどれですか。",
     answer: "授業や学習に必要な範囲",
     choices: ["自由に閲覧", "授業や学習に必要な範囲"],
@@ -89,7 +89,7 @@ const QUESTIONS_EASY = [
   },
   {
     id: "E13",
-    category: "メール",
+    category: "メール・フィッシング・SNS",
     text: "身に覚えのない添付ファイル付きメールを受信しました。正しい行動はどれですか。",
     answer: "開かない",
     choices: ["開く", "開かない"],
@@ -97,7 +97,7 @@ const QUESTIONS_EASY = [
   },
   {
     id: "E15",
-    category: "メール・SMS",
+    category: "メール・フィッシング・SNS",
     text: "友人から不自然なURLが送られてきました。安全な対応はどれですか。",
     answer: "本人に確認する",
     choices: ["本人に確認する", "URLを開く"],
@@ -105,7 +105,7 @@ const QUESTIONS_EASY = [
   },
   {
     id: "E16",
-    category: "メール・SMS",
+    category: "メール・フィッシング・SNS",
     text: "不在通知を装ったSMSが届きました。安全な確認方法はどれですか。",
     answer: "公式サイトから確認",
     choices: ["公式サイトから確認", "SMSのURLを開く"],
@@ -113,7 +113,7 @@ const QUESTIONS_EASY = [
   },
   {
     id: "E18",
-    category: "PC・端末管理",
+    category: "端末・物理セキュリティ",
     text: "学校から貸し出されたPCを自宅に持ち帰りました。家族に使わせる行為として正しいのはどれですか。",
     answer: "禁止",
     choices: ["禁止", "休日なら可"],
@@ -121,7 +121,7 @@ const QUESTIONS_EASY = [
   },
   {
     id: "E19",
-    category: "PC・端末管理",
+    category: "端末・物理セキュリティ",
     text: "席を離れる際、授業資料や研究資料が画面に表示されています。適切な行動はどれですか。",
     answer: "画面ロックする",
     choices: ["画面ロックする", "そのまま放置する"],
@@ -129,7 +129,7 @@ const QUESTIONS_EASY = [
   },
   {
     id: "E20",
-    category: "PC・端末管理",
+    category: "端末・物理セキュリティ",
     text: "PCにOSアップデート通知が表示されました。セキュリティ上、正しい対応はどれですか。",
     answer: "更新する",
     choices: ["更新する", "放置する"],
@@ -137,7 +137,7 @@ const QUESTIONS_EASY = [
   },
   {
     id: "E21",
-    category: "パスワード・認証",
+    category: "アカウント・認証",
     text: "複数のサービスで同じパスワードを使い回すことのリスクはどれですか。",
     answer: "他のサービスも乗っ取られる",
     choices: ["他のサービスも乗っ取られる", "リスクはない"],
@@ -145,7 +145,7 @@ const QUESTIONS_EASY = [
   },
   {
     id: "E23",
-    category: "パスワード・認証",
+    category: "アカウント・認証",
     text: "パスワードをPCのメモ帳に保存する行為は安全ですか。",
     answer: "危険",
     choices: ["安全", "危険"],
@@ -153,7 +153,7 @@ const QUESTIONS_EASY = [
   },
   {
     id: "E24",
-    category: "パスワード・認証",
+    category: "アカウント・認証",
     text: "パスワードを友達と共有する行為は安全ですか。",
     answer: "危険",
     choices: ["安全", "危険"],
@@ -161,7 +161,7 @@ const QUESTIONS_EASY = [
   },
   {
     id: "E25",
-    category: "パスワード・認証",
+    category: "アカウント・認証",
     text: "『password123』のような単純なパスワードは安全ですか。",
     answer: "危険",
     choices: ["安全", "危険"],
@@ -169,7 +169,7 @@ const QUESTIONS_EASY = [
   },
   {
     id: "E26",
-    category: "パスワード・認証",
+    category: "アカウント・認証",
     text: "共用PCでブラウザにパスワードを保存する行為は安全ですか。",
     answer: "危険",
     choices: ["安全", "危険"],
@@ -177,7 +177,7 @@ const QUESTIONS_EASY = [
   },
   {
     id: "E27",
-    category: "物理セキュリティ",
+    category: "端末・物理セキュリティ",
     text: "自分の学生証や入館カードを他人に貸す行為は安全ですか。",
     answer: "危険",
     choices: ["安全", "危険"],
@@ -185,7 +185,7 @@ const QUESTIONS_EASY = [
   },
   {
     id: "E28",
-    category: "物理セキュリティ",
+    category: "端末・物理セキュリティ",
     text: "見知らぬ人が学校の建物に一緒に入ろうとしています。適切な対応はどれですか。",
     answer: "受付で手続きしてもらうよう伝える",
     choices: ["通す", "受付で手続きしてもらうよう伝える"],
@@ -193,7 +193,7 @@ const QUESTIONS_EASY = [
   },
   {
     id: "E29",
-    category: "物理セキュリティ",
+    category: "端末・物理セキュリティ",
     text: "カフェで席を離れる際に危険な行動はどれですか。",
     answer: "PCの置きっぱなし",
     choices: ["PCの持ち歩き", "PCの置きっぱなし"],
@@ -201,7 +201,7 @@ const QUESTIONS_EASY = [
   },
   {
     id: "E31",
-    category: "SNS",
+    category: "メール・フィッシング・SNS",
     text: "SNSで『現金プレゼント』という投稿を見つけました。危険な行動はどれですか。",
     answer: "応募して拡散する",
     choices: ["無視する", "応募して拡散する"],
@@ -209,7 +209,7 @@ const QUESTIONS_EASY = [
   },
   {
     id: "E32",
-    category: "SNS",
+    category: "メール・フィッシング・SNS",
     text: "学校の教室や校内で写真を撮りSNSに投稿します。特に危険な状態はどれですか。",
     answer: "重要資料が写り込む",
     choices: ["空や天気が写り込む", "重要資料が写り込む"],
@@ -217,7 +217,7 @@ const QUESTIONS_EASY = [
   },
   {
     id: "E34",
-    category: "ソーシャルエンジニアリング",
+    category: "メール・フィッシング・SNS",
     text: "PCサポートを名乗る不審な電話で『ソフトを入れてください』と言われました。正しい対応はどれですか。",
     answer: "電話を切る",
     choices: ["電話を切る", "ソフトをインストールする"],
@@ -225,7 +225,7 @@ const QUESTIONS_EASY = [
   },
   {
     id: "E35",
-    category: "スマホ・アプリ",
+    category: "情報管理・個人情報",
     text: "無料ゲームアプリが『連絡先』『写真』『位置情報』など多くの権限を求めています。注意すべき理由はどれですか。",
     answer: "個人情報が収集される可能性",
     choices: ["スマホが壊れる", "個人情報が収集される可能性"],
@@ -233,7 +233,7 @@ const QUESTIONS_EASY = [
   },
   {
     id: "E37",
-    category: "ソフトウェア管理",
+    category: "マルウェア・攻撃手法",
     text: "違法アップロードされたソフトを見つけました。危険な行動はどれですか。",
     answer: "ダウンロードする",
     choices: ["使わない", "ダウンロードする"],
@@ -241,7 +241,7 @@ const QUESTIONS_EASY = [
   },
   {
     id: "E38",
-    category: "スマホ・インターネット",
+    category: "ネットワーク・Web・クラウド",
     text: "街中やお店に貼られている知らないQRコードをスマホで読み取るときに注意すべき理由はどれですか。",
     answer: "危険なサイトに誘導される可能性",
     choices: ["スマホが重くなる", "危険なサイトに誘導される可能性"],
@@ -249,7 +249,7 @@ const QUESTIONS_EASY = [
   },
   {
     id: "E39",
-    category: "USB・外部媒体",
+    category: "端末・物理セキュリティ",
     text: "学校の教室や校内の床に見知らぬUSBメモリが落ちていました。危険な行動はどれですか。",
     answer: "PCに挿す",
     choices: ["触らない", "PCに挿す"],
@@ -257,7 +257,7 @@ const QUESTIONS_EASY = [
   },
   {
     id: "E30",
-    category: "プライバシー保護",
+    category: "情報管理・個人情報",
     text: "写真に位置情報を付加する「ジオタグ」。自宅で撮影した際の懸念は？",
     answer: "自宅の場所が特定される",
     choices: ["画質が大幅に低下する", "自宅の場所が特定される", "写真の著作権が消失する"],
@@ -265,7 +265,7 @@ const QUESTIONS_EASY = [
   },
   {
     id: "E36",
-    category: "情報モラル",
+    category: "情報モラル・リテラシー",
     text: "SNSで「炎上」が発生した際、最も避けるべき行動は？",
     answer: "批判の輪に加わり拡散する",
     choices: ["批判の輪に加わり拡散する", "静観して関わらない", "公式の発表を待つ"],
@@ -273,7 +273,7 @@ const QUESTIONS_EASY = [
   },
   {
     id: "E40",
-    category: "SNSリテラシー",
+    category: "メール・フィッシング・SNS",
     text: "フェイクニュースを見分けるために、最初に行うべきことは？",
     answer: "複数の信頼できる情報源確認",
     choices: ["複数の信頼できる情報源確認", "フォロワーの反応を確認", "直感を信じて判断する"],
@@ -281,7 +281,7 @@ const QUESTIONS_EASY = [
   },
   {
     id: "E41",
-    category: "知的財産権",
+    category: "法務・知的財産・ガバナンス",
     text: "「著作権」が発生するタイミングはいつ？",
     answer: "作品を創作した瞬間",
     choices: ["役所に申請した時", "ネットに公開した時", "作品を創作した瞬間"],
@@ -289,7 +289,7 @@ const QUESTIONS_EASY = [
   },
   {
     id: "E42",
-    category: "個人情報保護",
+    category: "情報管理・個人情報",
     text: "Webサイトの「プライバシーポリシー」に書かれている内容は？",
     answer: "個人情報の利用目的や管理方法",
     choices: ["最新のニュース記事一覧", "個人情報の利用目的や管理方法", "サイト運営者の趣味の紹介"],
@@ -297,7 +297,7 @@ const QUESTIONS_EASY = [
   },
   {
     id: "E43",
-    category: "ネットワーク利用",
+    category: "ネットワーク・Web・クラウド",
     text: "「フィルタリング」ソフトを導入する最大のメリットは？",
     answer: "有害サイトへの接続を遮断",
     choices: ["有害サイトへの接続を遮断", "ネットの通信速度を高速化", "全ての広告を非表示にする"],
@@ -305,7 +305,7 @@ const QUESTIONS_EASY = [
   },
   {
     id: "E44",
-    category: "アカウント管理",
+    category: "アカウント・認証",
     text: "「多要素認証」で、パスワード以外に併用される要素の例は？",
     answer: "SMSに届く認証コード",
     choices: ["誕生日", "SMSに届く認証コード", "自分の住所"],
@@ -313,7 +313,7 @@ const QUESTIONS_EASY = [
   },
   {
     id: "E45",
-    category: "情報の特性",
+    category: "情報管理・個人情報",
     text: "情報の「複製性」を利用した、データ消失を防ぐ有効な対策は？",
     answer: "バックアップの作成",
     choices: ["データの暗号化", "バックアップの作成", "パスワードの設定"],

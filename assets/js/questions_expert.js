@@ -1,7 +1,7 @@
 const QUESTIONS_EXPERT = [
   {
     id: "X01",
-    category: "認証管理",
+    category: "アカウント・認証",
     text: "一度のログインで複数のサービスを使える仕組み（SSO）の利点はどれですか。",
     answer: "利便性向上と認証管理の効率化",
     choices: ["通信速度の向上", "利便性向上と認証管理の効率化", "ウイルス感染の自動防止"],
@@ -9,7 +9,7 @@ const QUESTIONS_EXPERT = [
   },
   {
     id: "X02",
-    category: "物理セキュリティ",
+    category: "端末・物理セキュリティ",
     text: "重要施設で『2名同時入室』を求める本質的な目的はどれですか。",
     answer: "内部不正の抑止と早期発見",
     choices: ["入室作業を速くする", "内部不正の抑止と早期発見", "室内温度を一定に保つ"],
@@ -17,7 +17,7 @@ const QUESTIONS_EXPERT = [
   },
   {
     id: "X03",
-    category: "インシデント調査",
+    category: "インシデント対応・運用",
     text: "サイバー犯罪の証拠を保全・分析する専門技術を何と呼びますか。",
     answer: "デジタルフォレンジック",
     choices: ["デジタルフォレンジック", "データマイニング", "パケットキャプチャ"],
@@ -25,7 +25,7 @@ const QUESTIONS_EXPERT = [
   },
   {
     id: "X04",
-    category: "脆弱性管理",
+    category: "マルウェア・攻撃手法",
     text: "製品の弱点を発見して報告した人に報奨金を支払う制度を何といいますか。",
     answer: "バグバウンティ",
     choices: ["バグバウンティ", "キャッシュバック", "アフィリエイト"],
@@ -33,7 +33,7 @@ const QUESTIONS_EXPERT = [
   },
   {
     id: "X05",
-    category: "個人情報保護",
+    category: "情報管理・個人情報",
     text: "匿名加工情報の取扱いで厳しく避けるべき行為はどれですか。",
     answer: "他の情報と照合して個人を再識別すること",
     choices: ["統計データとして活用すること", "他の情報と照合して個人を再識別すること", "条件に沿って第三者提供すること"],
@@ -41,7 +41,7 @@ const QUESTIONS_EXPERT = [
   },
   {
     id: "X06",
-    category: "防御技術",
+    category: "マルウェア・攻撃手法",
     text: "わざと攻撃を受けやすい環境を用意して、攻撃手法の観察や検知に使う仕組みはどれですか。",
     answer: "ハニーポット",
     choices: ["ハニーポット", "サンドボックス", "DMZ"],
@@ -49,7 +49,7 @@ const QUESTIONS_EXPERT = [
   },
   {
     id: "X07",
-    category: "パスワード保護",
+    category: "暗号・署名・証明書",
     text: "パスワードをハッシュ化するとき、同じパスワードでも同じ結果になりにくくするために加える値はどれですか。",
     answer: "ソルト",
     choices: ["ソルト", "キャッシュ", "バックアップ"],
@@ -57,7 +57,7 @@ const QUESTIONS_EXPERT = [
   },
   {
     id: "X08",
-    category: "サービス管理",
+    category: "インシデント対応・運用",
     text: "サービス提供者と利用者の間で、提供する水準や目標を取り決めた合意はどれか。",
     answer: "SLA",
     choices: ["SLA", "NDA", "SLM"],
@@ -65,7 +65,7 @@ const QUESTIONS_EXPERT = [
   },
   {
     id: "X09",
-    category: "リスク管理",
+    category: "法務・知的財産・ガバナンス",
     text: "リスクを『発生しやすさ』と『影響の大きさ』で整理して優先順位を考える手法はどれか。",
     answer: "リスクマトリクス",
     choices: ["SWOT", "リスクマトリクス", "回帰分析"],
@@ -73,7 +73,7 @@ const QUESTIONS_EXPERT = [
   },
   {
     id: "X10",
-    category: "暗号技術",
+    category: "暗号・署名・証明書",
     text: "公開鍵暗号方式の代表例として適切なものはどれか。",
     answer: "RSA",
     choices: ["AES", "RSA", "SHA-256"],
@@ -81,7 +81,7 @@ const QUESTIONS_EXPERT = [
   },
   {
     id: "X11",
-    category: "Webセキュリティ",
+    category: "マルウェア・攻撃手法",
     text: "Webアプリケーションへの攻撃を防ぐために導入される仕組みとして適切なものはどれか。",
     answer: "WAF",
     choices: ["VPN", "WAF", "IDS"],
@@ -89,7 +89,7 @@ const QUESTIONS_EXPERT = [
   },
   {
     id: "X12",
-    category: "認証基盤",
+    category: "暗号・署名・証明書",
     text: "デジタル証明書を発行し、公開鍵の正当性を保証する機関はどれか。",
     answer: "CA",
     choices: ["CA", "SSL", "VPN"],
@@ -97,7 +97,7 @@ const QUESTIONS_EXPERT = [
   },
   {
     id: "X13",
-    category: "侵入検知",
+    category: "インシデント対応・運用",
     text: "不正アクセスを検知して管理者に通知する仕組みはどれか。",
     answer: "IDS",
     choices: ["IDS", "IPS", "DMZ"],
@@ -105,7 +105,7 @@ const QUESTIONS_EXPERT = [
   },
   {
     id: "X14",
-    category: "ガバナンス",
+    category: "法務・知的財産・ガバナンス",
     text: "組織の業務が適正に行われるように、役割分担や確認手順を整える仕組みはどれか。",
     answer: "内部統制",
     choices: ["内部統制", "ITIL", "CMMI"],
@@ -113,7 +113,7 @@ const QUESTIONS_EXPERT = [
   },
   {
     id: "X15",
-    category: "AI活用",
+    category: "情報モラル・リテラシー",
     text: "会議の音声データから自動で文字起こしを行うときに使われる技術はどれか。",
     answer: "音声認識",
     choices: ["音声認識", "OCR", "音声合成"],
@@ -121,7 +121,7 @@ const QUESTIONS_EXPERT = [
   },
   {
     id: "X16",
-    category: "クラウド",
+    category: "ネットワーク・Web・クラウド",
     text: "サーバやネットワークなどの基盤を提供するクラウドサービス形態はどれか。",
     answer: "IaaS",
     choices: ["IaaS", "SaaS", "PaaS"],
@@ -129,7 +129,7 @@ const QUESTIONS_EXPERT = [
   },
   {
     id: "X17",
-    category: "ストレージ管理",
+    category: "情報管理・個人情報",
     text: "同じ内容のデータをまとめて保存し、記憶装置の無駄を減らす技術はどれか。",
     answer: "重複排除",
     choices: ["重複排除", "暗号化", "仮想化"],
@@ -137,7 +137,7 @@ const QUESTIONS_EXPERT = [
   },
   {
     id: "X18",
-    category: "バックアップ管理",
+    category: "インシデント対応・運用",
     text: "バックアップを世代ごとに管理する方式として知られるものはどれか。",
     answer: "GFS",
     choices: ["GFS", "差分バックアップ", "増分バックアップ"],
@@ -145,7 +145,7 @@ const QUESTIONS_EXPERT = [
   },
   {
     id: "X19",
-    category: "Web技術",
+    category: "ネットワーク・Web・クラウド",
     text: "Webページで、利用者の端末上でJavaScriptが入力内容を確認する処理はどれか。",
     answer: "クライアントサイド処理",
     choices: ["クライアントサイド処理", "サーバサイド処理", "暗号化処理"],
@@ -153,7 +153,7 @@ const QUESTIONS_EXPERT = [
   },
   {
     id: "X20",
-    category: "データ消去",
+    category: "情報管理・個人情報",
     text: "SSD内のデータをできるだけ完全に消去する方法として適切なものはどれか。",
     answer: "Secure Erase",
     choices: ["Secure Erase", "単純な削除", "ファイル名の変更"],
@@ -161,7 +161,7 @@ const QUESTIONS_EXPERT = [
   },
   {
     id: "X21",
-    category: "無線LAN",
+    category: "ネットワーク・Web・クラウド",
     text: "無線LANでSSIDを非表示にする設定について、最も適切な説明はどれか。",
     answer: "見つけにくくはなるが、暗号化の代わりにはならない",
     choices: [
@@ -173,7 +173,7 @@ const QUESTIONS_EXPERT = [
   },
   {
     id: "X22",
-    category: "セキュリティ管理",
+    category: "法務・知的財産・ガバナンス",
     text: "起こりうる脅威や弱点を洗い出し、どの対策を優先するか検討する活動はどれか。",
     answer: "リスクアセスメント",
     choices: ["リスクアセスメント", "データ圧縮", "ベンチマーク"],
@@ -181,7 +181,7 @@ const QUESTIONS_EXPERT = [
   },
   {
     id: "X23",
-    category: "ネットワーク",
+    category: "ネットワーク・Web・クラウド",
     text: "URLが『https』で始まるWebサイトについて、最も適切な説明はどれか。",
     answer: "通信は暗号化されるが、内容の正しさは別に確認が必要",
     choices: [
@@ -193,7 +193,7 @@ const QUESTIONS_EXPERT = [
   },
   {
     id: "X24",
-    category: "知的財産",
+    category: "法務・知的財産・ガバナンス",
     text: "オープンソースソフトウェアについて最も適切な説明はどれか。",
     answer: "著作権は残るが、利用条件を示して公開できる",
     choices: [
@@ -205,7 +205,7 @@ const QUESTIONS_EXPERT = [
   },
   {
     id: "X25",
-    category: "可用性",
+    category: "インシデント対応・運用",
     text: "災害に備えて、別の場所にも同じデータを保管する主な目的はどれか。",
     answer: "システムやデータを利用し続けやすくするため",
     choices: [
@@ -217,7 +217,7 @@ const QUESTIONS_EXPERT = [
   },
   {
     id: "X26",
-    category: "認証",
+    category: "アカウント・認証",
     text: "パスワードが漏えいした場合でも、不正ログインの被害を減らす対策として最も有効なのはどれか。",
     answer: "多要素認証を設定する",
     choices: ["多要素認証を設定する", "IDを短くする", "表示名を変更する"],
@@ -225,7 +225,7 @@ const QUESTIONS_EXPERT = [
   },
   {
     id: "X27",
-    category: "クラウド",
+    category: "ネットワーク・Web・クラウド",
     text: "クラウドサービスを使うときの考え方として適切なのはどれか。",
     answer: "事業者任せにせず、利用者側でも設定や権限管理が必要",
     choices: [
@@ -237,7 +237,7 @@ const QUESTIONS_EXPERT = [
   },
   {
     id: "X28",
-    category: "権限管理",
+    category: "アカウント・認証",
     text: "必要な人に必要な範囲だけ権限を与える考え方を何というか。",
     answer: "最小権限の原則",
     choices: ["最小権限の原則", "冗長化", "可搬性"],
@@ -245,7 +245,7 @@ const QUESTIONS_EXPERT = [
   },
   {
     id: "X29",
-    category: "インシデント対応",
+    category: "インシデント対応・運用",
     text: "不正アクセスの疑いがあるとき、原因調査のために重要なこととして適切なのはどれか。",
     answer: "ログや記録を確認し、証拠をむやみに消さない",
     choices: [
@@ -257,7 +257,7 @@ const QUESTIONS_EXPERT = [
   },
   {
     id: "X30",
-    category: "暗号・認証",
+    category: "暗号・署名・証明書",
     text: "デジタル署名の主な役割として最も適切なものはどれか。",
     answer: "送信者の真正性や改ざんの有無を確認しやすくする",
     choices: [
@@ -269,7 +269,7 @@ const QUESTIONS_EXPERT = [
   },
   {
     id: "X31",
-    category: "フィッシング対策",
+    category: "メール・フィッシング・SNS",
     text: "本物に似せたURLのフィッシングサイトにだまされないために、最も有効な確認はどれか。",
     answer: "ドメイン名をよく確認する",
     choices: ["ドメイン名をよく確認する", "ページの色使いだけを見る", "表示速度だけを見る"],
@@ -277,7 +277,7 @@ const QUESTIONS_EXPERT = [
   },
   {
     id: "X32",
-    category: "個人情報保護",
+    category: "情報管理・個人情報",
     text: "個人情報を集めるときに大切な考え方として最も適切なのはどれか。",
     answer: "利用目的を明確にし、その範囲で扱う",
     choices: [
@@ -289,7 +289,7 @@ const QUESTIONS_EXPERT = [
   },
   {
     id: "X33",
-    category: "知的財産",
+    category: "法務・知的財産・ガバナンス",
     text: "他人の著作物を授業資料やレポートで利用するときに大切なこととして最も適切なのはどれか。",
     answer: "引用条件や利用ルールを確認する",
     choices: [
@@ -301,7 +301,7 @@ const QUESTIONS_EXPERT = [
   },
   {
     id: "X34",
-    category: "暗号の基礎",
+    category: "暗号・署名・証明書",
     text: "ハッシュ関数と暗号化の違いとして適切な説明はどれか。",
     answer: "ハッシュは元に戻すことを目的としない",
     choices: [
@@ -313,7 +313,7 @@ const QUESTIONS_EXPERT = [
   },
   {
     id: "X35",
-    category: "システム運用",
+    category: "インシデント対応・運用",
     text: "バックアップから復旧する際に、『どの時点までのデータ損失を許容できるか』を表す考え方はどれか。",
     answer: "RPO",
     choices: ["RPO", "URL", "GUI"],
@@ -321,7 +321,7 @@ const QUESTIONS_EXPERT = [
   },
   {
     id: "X36",
-    category: "ネットワーク",
+    category: "ネットワーク・Web・クラウド",
     text: "VPNを使う主な目的として最も適切なものはどれか。",
     answer: "安全性を高めながら通信しやすくする",
     choices: [
@@ -333,7 +333,7 @@ const QUESTIONS_EXPERT = [
   },
   {
     id: "X37",
-    category: "内部統制",
+    category: "法務・知的財産・ガバナンス",
     text: "一人だけで申請と承認の両方を行えないように役割を分ける主な理由はどれか。",
     answer: "不正やミスを起こしにくくするため",
     choices: [
@@ -345,7 +345,7 @@ const QUESTIONS_EXPERT = [
   },
   {
     id: "X38",
-    category: "Webセキュリティ",
+    category: "マルウェア・攻撃手法",
     text: "WebアプリケーションでSQLインジェクション対策として有効な方法はどれか。",
     answer: "入力値を適切に扱い、SQLを安全に組み立てる",
     choices: [
@@ -357,7 +357,7 @@ const QUESTIONS_EXPERT = [
   },
   {
     id: "X39",
-    category: "可用性設計",
+    category: "インシデント対応・運用",
     text: "一つの装置が故障すると全体が止まってしまう構成上の弱点を何というか。",
     answer: "単一障害点",
     choices: ["単一障害点", "暗号鍵", "可搬性"],
@@ -365,7 +365,7 @@ const QUESTIONS_EXPERT = [
   },
   {
     id: "X40",
-    category: "情報資産管理",
+    category: "情報管理・個人情報",
     text: "組織が守るべき情報を把握するために、最初に行うべきこととして適切なのはどれか。",
     answer: "どんな情報資産があるか整理する",
     choices: [

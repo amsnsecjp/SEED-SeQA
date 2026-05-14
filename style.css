@@ -326,6 +326,19 @@ input[type="text"] {
     border-radius: 4px;
 }
 
+input[type="text"].input-invalid {
+    border-color: var(--danger);
+    box-shadow: 0 0 12px rgba(255, 51, 102, 0.25);
+}
+
+.username-error {
+    margin: 10px 0 0;
+    font-size: 0.8rem;
+    color: var(--danger);
+    text-align: center;
+    line-height: 1.45;
+}
+
 input[type="text"]:focus {
     border-color: var(--primary);
     box-shadow: 0 0 20px rgba(0, 210, 255, 0.3);
@@ -400,6 +413,33 @@ input[type="text"]:focus {
 .btn-easy:hover {
     background: rgba(0, 255, 157, 0.1);
     box-shadow: 0 0 10px rgba(0, 255, 157, 0.3);
+}
+
+.seqa-title-e {
+    cursor: pointer;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    transition: color 0.2s ease, text-shadow 0.2s ease;
+}
+
+.seqa-title-e.seqa-e-holding {
+    color: #ff99aa;
+}
+
+.seqa-title-e.seqa-e-armed {
+    color: #ff3366;
+    text-shadow: 0 0 16px rgba(255, 51, 102, 0.65);
+}
+
+.btn-expert {
+    border-color: #ff3366;
+    color: #ff6b8a;
+}
+
+.btn-expert:hover {
+    background: rgba(255, 51, 102, 0.12);
+    box-shadow: 0 0 14px rgba(255, 51, 102, 0.35);
 }
 
 .btn-normal {

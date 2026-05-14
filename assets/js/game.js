@@ -124,8 +124,118 @@ class SecurityGame {
         this.remainingTime = 180; // 3 minutes
         this.isPaused = false;
         this.studyDifficulty = "Easy";
+        this.seqaLongPressTimer = null;
 
         // Removed explicit init() call from constructor to control timing
+    }
+
+    isHardUnlocked() {
+        return localStorage.getItem("unlocked_hard") === "true";
+    }
+
+    isExpertChannelArmed() {
+        return localStorage.getItem("expert_channel_armed") === "true";
+    }
+
+    setUsernameError(visible) {
+        const err = document.getElementById("username-error");
+        const input = document.getElementById("username-input");
+        if (err) err.classList.toggle("hidden", !visible);
+        if (input) {
+            input.classList.toggle("input-invalid", visible);
+            if (visible) {
+                input.setAttribute("aria-invalid", "true");
+            } else {
+                input.removeAttribute("aria-invalid");
+            }
+        }
+    }
+
+    ensureAgentName() {
+        const input = document.getElementById("username-input");
+        const sanitized = input ? sanitizeAgentInputValue(input.value) : "";
+        if (!sanitized) {
+            this.setUsernameError(true);
+            if (input) input.focus();
+            return false;
+        }
+        this.setUsernameError(false);
+        if (input) input.value = sanitized;
+        this.username = sanitized;
+        localStorage.setItem("agent_name", sanitized);
+        return true;
+    }
+
+    armExpertChannel() {
+        if (!this.isHardUnlocked()) return;
+        localStorage.setItem("expert_channel_armed", "true");
+        this.updateExpertChannelUI();
+    }
+
+    updateExpertChannelUI() {
+        const letter = document.getElementById("seqa-trigger-e");
+        const expertBtn = document.getElementById("btn-expert");
+        const armed = this.isExpertChannelArmed() && this.isHardUnlocked();
+
+        if (letter) {
+            letter.classList.toggle("seqa-e-armed", armed);
+        }
+        if (expertBtn) {
+            expertBtn.hidden = !armed;
+            expertBtn.classList.toggle("hidden", !armed);
+        }
+    }
+
+    tryStartExpert() {
+        if (!this.isExpertChannelArmed() || !this.isHardUnlocked()) {
+            return;
+        }
+        if (!this.ensureAgentName()) {
+            return;
+        }
+        if (!confirm(
+            "警告：ここから先は修羅の道。\n生半可な知識では太刀打ちできない...\n覚悟はいいか？"
+        )) {
+            return;
+        }
+        this.start("Expert");
+    }
+
+    bindSeqaLongPress() {
+        const el = document.getElementById("seqa-trigger-e");
+        if (!el) return;
+
+        const LONG_MS = 1000;
+
+        const beginHold = () => {
+            if (!this.isHardUnlocked()) return;
+            clearTimeout(this.seqaLongPressTimer);
+            el.classList.add("seqa-e-holding");
+            this.seqaLongPressTimer = setTimeout(() => {
+                this.seqaLongPressTimer = null;
+                el.classList.remove("seqa-e-holding");
+                this.armExpertChannel();
+            }, LONG_MS);
+        };
+
+        const endHold = () => {
+            clearTimeout(this.seqaLongPressTimer);
+            this.seqaLongPressTimer = null;
+            el.classList.remove("seqa-e-holding");
+        };
+
+        el.addEventListener("mousedown", (e) => {
+            e.preventDefault();
+            beginHold();
+        });
+        el.addEventListener("mouseup", endHold);
+        el.addEventListener("mouseleave", endHold);
+        el.addEventListener("touchstart", (e) => {
+            beginHold();
+        }, { passive: true });
+        el.addEventListener("touchend", endHold);
+        el.addEventListener("touchcancel", endHold);
+        el.addEventListener("contextmenu", (e) => e.preventDefault());
     }
 
     init() {
@@ -141,6 +251,7 @@ class SecurityGame {
         // Load unlock state
         this.checkUnlocks();
         this.refreshStudyExpertTab();
+        this.updateExpertChannelUI();
 
         // Bind Start Screen inputs
         if (input) {
@@ -153,12 +264,19 @@ class SecurityGame {
             input.addEventListener('input', (e) => {
                 const sanitized = sanitizeAgentInputValue(e.target.value);
                 e.target.value = sanitized;
-                this.username = sanitized || "GUEST";
-                localStorage.setItem('agent_name', this.username);
+                if (sanitized) {
+                    this.username = sanitized;
+                    localStorage.setItem('agent_name', sanitized);
+                    this.setUsernameError(false);
+                } else {
+                    this.username = "GUEST";
+                    localStorage.removeItem('agent_name');
+                }
             });
         }
 
         this.bindUiActions();
+        this.bindSeqaLongPress();
 
         // Cheat Code: Click Title 10 times
         let titleClicks = 0;
@@ -185,7 +303,12 @@ class SecurityGame {
         difficultyButtons.forEach((btn) => {
             btn.addEventListener('click', () => {
                 const difficulty = btn.getAttribute('data-difficulty');
-                if (difficulty) this.start(difficulty);
+                if (!difficulty) return;
+                if (difficulty === "Expert") {
+                    this.tryStartExpert();
+                    return;
+                }
+                this.start(difficulty);
             });
         });
 
@@ -399,6 +522,8 @@ class SecurityGame {
             btnHard.classList.add('locked');
         }
 
+        this.updateExpertChannelUI();
+
         // Badge Check
         const brand = document.querySelector('.brand');
         const existingBadge = document.querySelector('.badge');
@@ -419,26 +544,10 @@ class SecurityGame {
     }
 
     start(difficulty) {
-        const input = document.getElementById('username-input');
-        if (input) {
-            const sanitized = sanitizeAgentInputValue(input.value);
-            input.value = sanitized;
-            this.username = sanitized || "GUEST";
-            localStorage.setItem('agent_name', this.username); // Ensure saved on start
+        if (!this.ensureAgentName()) {
+            return;
         }
         this.difficulty = difficulty;
-
-        // EXPERT MODE TRIGGER CHECK
-        // Trigger: Name="CIAexpert" + Click Easy + Hard Unlocked
-        const isHardUnlocked = localStorage.getItem('unlocked_hard') === 'true';
-        if (this.username === "CIAexpert" && difficulty === 'Easy' && isHardUnlocked) {
-
-            // Provocation Message (New)
-            alert("警告：ここから先は修羅の道。\n生半可な知識では太刀打ちできない...\n覚悟はいいか？");
-
-            this.difficulty = "Expert";
-            console.log("EXPERT MODE ACTIVATED");
-        }
 
         // Reset Theme
         document.body.classList.remove('theme-expert');
@@ -713,8 +822,7 @@ class SecurityGame {
         // UNLOCK HINTS & LOGIC (Updated)
         if (this.difficulty === 'Hard') {
             if (this.score === 100) {
-                // Hint for Expert
-                msgEl.innerHTML = (msgEl.innerHTML || "") + "<br><br><em>「CIAexpert がEASYをプレイすると、、？」</em>";
+                msgEl.innerHTML = (msgEl.innerHTML || "") + "<br><br><em>タイトルの「e」を長押しすると、別の道が開くかもしれない…</em>";
             } else if (this.score <= 90) {
                 msgEl.innerHTML = (msgEl.innerHTML || "") + "<br><br><em>HARD100点を極めし者は新たな道が開かれん...</em>";
             }
@@ -755,9 +863,11 @@ class SecurityGame {
             score: this.score,
             result: resultText,
             token: GAS_TOKEN,
-            questions: this.userAnswers.map(ans => ({
+            questions: this.userAnswers.map((ans) => ({
                 id: ans.qId,
-                correct: ans.isCorrect
+                category: ans.category || "",
+                correct: ans.isCorrect,
+                choice: ans.userChoice || ""
             }))
         };
 

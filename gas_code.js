@@ -9,7 +9,10 @@
  *    - 実行するユーザー: 自分
  *    - アクセスできるユーザー: 全員
  * 5. 発行されたURLをコピーして game.js の GAS_URL に設定
+ * 6. ログはスプレッドシート内のシート「Latest」に追記（無ければ自動作成）
  */
+
+var LOG_SHEET_NAME = "Latest";
 
 var TOP_LEVEL_ALLOWED_KEYS = {
   agent: true,
@@ -22,7 +25,9 @@ var TOP_LEVEL_ALLOWED_KEYS = {
 
 var QUESTION_ALLOWED_KEYS = {
   id: true,
-  correct: true
+  category: true,
+  correct: true,
+  choice: true
 };
 
 var ALLOWED_RESULTS = {
@@ -55,9 +60,18 @@ var ALLOWED_QUESTION_IDS = {
   X52: true, X53: true, X54: true, X55: true, X56: true, X57: true, X58: true, X59: true
 };
 
+function getLogSheet() {
+  var ss = SpreadsheetApp.getActiveSpreadsheet();
+  var sheet = ss.getSheetByName(LOG_SHEET_NAME);
+  if (!sheet) {
+    sheet = ss.insertSheet(LOG_SHEET_NAME);
+  }
+  return sheet;
+}
+
 function doPost(e) {
   try {
-    var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
+    var sheet = getLogSheet();
     if (!e || !e.postData || !e.postData.contents) {
       throw new Error("Invalid request body");
     }
@@ -68,37 +82,39 @@ function doPost(e) {
     // ヘッダーが無ければ作成
     if (sheet.getLastRow() === 0) {
       var headers = [
-        "タイムスタンプ", "エージェント名", "難易度", "スコア", "結果",
-        "Q1_ID", "Q1_正誤",
-        "Q2_ID", "Q2_正誤",
-        "Q3_ID", "Q3_正誤",
-        "Q4_ID", "Q4_正誤",
-        "Q5_ID", "Q5_正誤",
-        "Q6_ID", "Q6_正誤",
-        "Q7_ID", "Q7_正誤",
-        "Q8_ID", "Q8_正誤",
-        "Q9_ID", "Q9_正誤",
-        "Q10_ID", "Q10_正誤"
+        "タイムスタンプ", "名前", "難易度", "スコア",
+        "Q1_ID", "Q1_Category", "Q1_正誤", "Q1_選択",
+        "Q2_ID", "Q2_Category", "Q2_正誤", "Q2_選択",
+        "Q3_ID", "Q3_Category", "Q3_正誤", "Q3_選択",
+        "Q4_ID", "Q4_Category", "Q4_正誤", "Q4_選択",
+        "Q5_ID", "Q5_Category", "Q5_正誤", "Q5_選択",
+        "Q6_ID", "Q6_Category", "Q6_正誤", "Q6_選択",
+        "Q7_ID", "Q7_Category", "Q7_正誤", "Q7_選択",
+        "Q8_ID", "Q8_Category", "Q8_正誤", "Q8_選択",
+        "Q9_ID", "Q9_Category", "Q9_正誤", "Q9_選択",
+        "Q10_ID", "Q10_Category", "Q10_正誤", "Q10_選択"
       ];
       sheet.appendRow(headers);
     }
 
-    // 行データを構築
+    // 行データを構築（タイムスタンプ > 名前 > 難易度 > スコア > Q1...）
     var row = [
       sanitizeCell(getServerTimestamp()),
       sanitizeCell(data.agent),
       sanitizeCell(data.difficulty),
-      sanitizeCell(data.score),
-      sanitizeCell(data.result)
+      sanitizeCell(data.score)
     ];
 
-    // Q1〜Q10 の詳細を追加
     var questions = data.questions || [];
     for (var i = 0; i < 10; i++) {
       if (i < questions.length) {
         row.push(sanitizeCell(questions[i].id));
+        row.push(sanitizeCell(questions[i].category));
         row.push(sanitizeCell(questions[i].correct ? "O" : "X"));
+        row.push(sanitizeCell(questions[i].choice));
       } else {
+        row.push("");
+        row.push("");
         row.push("");
         row.push("");
       }
@@ -216,6 +232,14 @@ function validatePayload(data) {
     if (typeof q.correct !== "boolean") {
       throw new Error("Invalid question correctness");
     }
+    if (typeof q.category !== "string" || q.category.length > 80) {
+      throw new Error("Invalid question category");
+    }
+    if (typeof q.choice !== "string" || q.choice.length > 200) {
+      throw new Error("Invalid question choice");
+    }
+    q.category = String(q.category);
+    q.choice = String(q.choice);
     if (q.correct) {
       correctCount++;
     }
